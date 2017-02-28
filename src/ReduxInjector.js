@@ -46,9 +46,16 @@ export function createInjectStore(initialReducers, ...args) {
   return store;
 }
 
-export function injectReducer(key, reducer, force = false) {
+export function injectReducer(key, reducer, append = true, force = false) {
   // If already set, do nothing.
-  if (has(store.injectedReducers, key) || force) return;
+  var hasKey = has(store.injectedReducers, key);
+  if (hasKey && !append && !force) return;
+  if(append) {
+     var injectedReducers = get(store.injectedReducers, key);
+     reducer = Object.assing({}, injectedReducers, reducer);
+   } else if(!force) {
+     return;
+   }
 
   set(store.injectedReducers, key, reducer);
   store.replaceReducer(combineReducersRecurse(store.injectedReducers));
