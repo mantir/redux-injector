@@ -50,9 +50,11 @@ export function injectReducer(key, reducer, append = true, force = false) {
   // If already set, do nothing.
   var hasKey = has(store.injectedReducers, key);
   if (hasKey && !append && !force) return;
-  if(append) {
+  if(hasKey && append) {
      var injectedReducers = get(store.injectedReducers, key);
-     reducer = Object.assing({}, injectedReducers, reducer);
+     if(typeof(injectedReducers) == 'object') {
+       reducer = Object.assign({}, injectedReducers, reducer);
+     }
    } else if(!force) {
      return;
    }
