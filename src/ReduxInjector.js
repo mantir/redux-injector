@@ -1,5 +1,5 @@
 import { createStore, combineReducers } from 'redux';
-import { set, has } from 'lodash';
+import { set, has, get } from 'lodash';
 
 let store = {};
 let combine = combineReducers;
