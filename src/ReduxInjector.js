@@ -48,6 +48,13 @@ export function createInjectStore(initialReducers, ...args) {
 
 export function injectReducer(key, reducer, append = true, force = false) {
   // If already set, do nothing.
+  if(Array.isArray(reducer)) {
+    var newReducer = {};
+    reducer.map((red, key) => {
+      Object.assign(newReducer, red);
+    });
+    reducer = newReducer;
+  }
   var hasKey = has(store.injectedReducers, key);
   if (hasKey && !append && !force) return;
   if(hasKey && append) {
